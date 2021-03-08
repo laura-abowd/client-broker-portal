@@ -1,6 +1,6 @@
 import React from "react";
-import { Container, Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 function Nav() {
   return (
@@ -8,12 +8,26 @@ function Nav() {
       <Container>
         <div className="pt-4 nav-container" style={styles.navContainer}>
           <ul style={styles.ulList}>
-            <Link to="/client" className="flex-fill" style={styles.links}>
+            <NavLink
+              to="/client"
+              className="flex-fill"
+              exact
+              activeStyle={styles.active}
+              inactiveStyle={styles.inactive}
+              style={styles.links}
+            >
               <li style={styles.inactive}>Client referrals</li>
-            </Link>
-            <Link to="/" className="flex-fill" style={styles.links}>
-              <li style={styles.active}>Broker/Agent referrals</li>
-            </Link>
+            </NavLink>
+            <NavLink
+              to="/"
+              className="flex-fill"
+              exact
+              activeStyle={styles.active}
+              inactiveStyle={styles.inactive}
+              style={styles.links}
+            >
+              <li>Broker/Agent referrals</li>
+            </NavLink>
           </ul>
         </div>
       </Container>
@@ -32,11 +46,14 @@ const styles = {
     listStyle: "none",
     display: "flex",
     justifyContent: "space-around",
-    fontSize: 32,
+    fontSize: 24,
   },
   links: {
     textDecoration: "none",
     color: "#394453",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 };
+
 export default Nav;

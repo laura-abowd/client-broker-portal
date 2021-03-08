@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Col, Row } from "react-bootstrap";
+import ReferralModal from "./ReferralModal";
 
 function Client() {
   useEffect(() => {
@@ -7,16 +8,23 @@ function Client() {
   }, []);
 
   const [items, setItems] = useState([]);
+  const [phoneNumbers, setPhoneNumber] = useState([]);
 
   const fetchItems = async () => {
     const data = await fetch(
       "https://random-data-api.com/api/users/random_user?size=10"
     );
+    const phoneNumber = await fetch(
+      "https://random-data-api.com/api/phone_number/random_phone_number?size=10"
+    );
 
     const items = await data.json();
-    console.log(items);
     setItems(items);
+
+    const phoneNumbers = await phoneNumber.json();
+    setPhoneNumber(phoneNumbers);
   };
+
   return (
     <div>
       <div
@@ -25,52 +33,61 @@ function Client() {
       >
         <Container>
           <Row>
-            <Col sm={4} className="">
-              Emails sent
+            <Col sm={4}>
+              <p className="m-0">Emails sent</p>
+              <p className="display-4 font-weight-bold ">9,999</p>
             </Col>
-            <Col sm={4}>Conversions</Col>
-            <Col sm={4}>Your earnings</Col>
+            <Col sm={4}>
+              <p className="m-0">Conversions</p>
+              <p className="display-4 font-weight-bold ">0</p>
+            </Col>
+            <Col sm={4}>
+              <p className="m-0">Your earnings</p>
+              <p className="display-4 font-weight-bold ">250K+</p>
+            </Col>
           </Row>
         </Container>
       </div>
-      <div className="mt-4" style={styles.searchInputDiv}>
+      <div className="my-5 d-flex justify-content-around">
         <input
-          style={styles.searchInput}
+          className="col-4"
           type="text"
           placeholder="Looking for something specific? Search here..."
         />
+        <ReferralModal />
       </div>
-      <div>
+
+      <div style={styles.whiteContainer}>
         <Container>
           <Row>
-            <Col>
-              <h3>First Name</h3>
+            <Col className="p-0">
+              <h3 style={styles.tableHeader}>First Name</h3>
               {items.map((item) => (
-                <p>{item.first_name}</p>
+                <p style={styles.rowLine}>{item.first_name}</p>
               ))}
             </Col>
-            <Col>
-              <h3>Last Name</h3>
+            <Col className="p-0">
+              <h3 style={styles.tableHeader}>Last Name</h3>
               {items.map((item) => (
-                <p>{item.last_name}</p>
+                <p style={styles.rowLine}>{item.last_name}</p>
               ))}
             </Col>
-            <Col>
-              <h3>Phone</h3>
-              {items.map((item) => (
-                <p>{item.phone_number}</p>
+            <Col className="p-0">
+              <h3 style={styles.tableHeader}>Phone</h3>
+              {phoneNumbers.map((number) => (
+                <p style={styles.rowLine}>{number.cell_phone}</p>
               ))}
             </Col>
-            <Col>
-              <h3>Email</h3>
+            <Col className="p-0">
+              <h3 style={styles.tableHeader}>Email</h3>
               {items.map((item) => (
-                <p>{item.email}</p>
+                <p style={styles.rowLine}>{item.email}</p>
               ))}
             </Col>
-            <Col>
-              <h3>Status</h3>
+            <Col className="p-0">
+              <h3 style={styles.tableHeader}>Status</h3>
               {items.map((item) => (
-                <p>{item.subscription.status}</p>
+                <p style={styles.rowLine}>{item.subscription.status}</p>
               ))}
             </Col>
           </Row>
@@ -81,25 +98,23 @@ function Client() {
 }
 
 const styles = {
-  grayContainer: {
-    backgroundColor: "#F2F2F2",
-    height: "100vh",
-  },
-
   blueContainer: {
     backgroundColor: "#2F3849",
     color: "white",
-    height: "25%",
     textAlign: "center",
   },
-  searchInputDiv: {
-    width: "50%",
-    margin: "0 auto",
+  whiteContainer: {
+    backgroundColor: "white",
+    border: "1px solid #B3B3B3",
   },
-  searchInput: {
-    display: "block",
-    margin: "0 auto",
-    width: "auto",
+  rowLine: {
+    borderTop: "1px solid #C3C3C3",
+    padding: "12px 12px 0",
+  },
+  tableHeader: {
+    fontSize: "16px",
+    fontWeight: "bold",
+    padding: "12px 12px 0",
   },
 };
 

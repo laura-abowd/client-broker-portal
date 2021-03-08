@@ -27,7 +27,7 @@ function App() {
 const styles = {
   grayContainer: {
     backgroundColor: "#F2F2F2",
-    height: "100vh",
+    paddingBottom: 50,
   },
 };
 
